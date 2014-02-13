@@ -16,7 +16,7 @@ case ${argv[0]} in
     ;;
 esac
 
-VERSION="7.1.0"
+VERSION="7.4.0"
 BOX="debian-${VERSION}-${ARCH}"
 
 FOLDER_BASE=$(pwd)
@@ -133,10 +133,10 @@ chmod 755 "${FOLDER_BUILD}/custom/poststrap.sh"
 chmod 755 "${FOLDER_BUILD}/custom/bootstrap.sh"
 
 info "Packing ISO files..."
-mkisofs -r -V "Custom Debian Install CD" -cache-inodes -quiet -J -l \
+genisoimage -r -V "Custom Debian Install CD" -cache-inodes -quiet -J -l \
     -b isolinux/isolinux.bin -c isolinux/boot.cat -no-emul-boot \
     -boot-load-size 4 -boot-info-table -o "${FOLDER_BUILD}/custom.iso" \
-    "${FOLDER_BUILD}/custom"
+    "${FOLDER_BUILD}/custom/"
 
 info "Creating VM..."
 VBoxManage createvm --name "${BOX}" --ostype Debian --register --basefolder "${FOLDER_VBOX}"
